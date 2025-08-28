@@ -18,14 +18,24 @@ Shell::~Shell()
     delete status;
 }
 
+
+
 std::string Shell::getCommand()
 {
-    std::string cmd;
-    if (state) {
-        std::cout << state->getPromptPrefix();
+    if (!state) {
+        return "TODO";
     }
+    std::string cmd;
+    std::cout << state->getPromptPrefix();
     std::getline(std::cin, cmd);
     return cmd;
+}
+
+inline std::string trim(std::string &str)
+{
+    str.erase(str.find_last_not_of(' ') + 1);
+    str.erase(0, str.find_first_not_of(' ')); 
+    return str;
 }
 
 int Shell::run()
@@ -33,16 +43,23 @@ int Shell::run()
     while (std::cin.good())
     {
         std::string cmd = getCommand();
-        if (fork())
+        cmd = trim(cmd);
+        auto runner = [&](State *state)
         {
-            wait(status);
-        } else {
-            char *cstr = new char[cmd.length() + 1]; // +1 for null terminator
-            std::strcpy(cstr, cmd.c_str());
-            char *args[] = {cstr, nullptr};
-            execvp(cstr, args);
-            exit(1);
+            if (fork())
+            {
+                wait(status);
+            }
+            else
+            {
+                char *cstr = new char[cmd.length() + 1]; // +1 for null terminator
+                std::strcpy(cstr, cmd.c_str());
+                char *args[] = {cstr, nullptr};
+                execvp(cstr, args);
+                exit(1);
+            }
+        };
+        state->instrument(runner);
         }
-    }
     return 0;
 }

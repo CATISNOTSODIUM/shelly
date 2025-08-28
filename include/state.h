@@ -2,6 +2,7 @@
 #define SHELLY_STATE_H
 
 #include <string>
+#include <functional>
 
 // Forwarding class
 class Shell;
@@ -12,15 +13,17 @@ class Shell;
 class State
 {
 public:
-    State(Shell * shell);
+    State(Shell *shell);
     ~State();
     static void loadState(char *filePath);
-    void saveState();
-    std::string getPromptPrefix(); 
+    std::string getPromptPrefix();
+    // Run the function and store the state if necessary
+    void instrument(std::function<void(State * state)>);
+
 private:
     State();
     std::string promptPrefix;
-    Shell * shell;
+    Shell *shell;
 };
 
 #endif
