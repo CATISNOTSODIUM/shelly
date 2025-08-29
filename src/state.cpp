@@ -27,3 +27,7 @@ void State::instrument(std::function<void(State *state)> runner)
     auto end = std::chrono::steady_clock::now();
     std::cout << formatTimeReadable(end - start) << std::endl;
 }
+
+void State::updateCmdStatistics(std::string & cmd)
+{
+}

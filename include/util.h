@@ -7,8 +7,30 @@
 #include <unistd.h>
 #include <chrono>
 #include <sstream>
+#include <filesystem>
 
-std::string decorateString(std::string shellName, std::string userHost){
+std::string getTruncatedCwd(int depth = 2) {
+    namespace fs = std::filesystem;
+    fs::path cwd = fs::current_path();
+    std::vector<std::string> parts;
+    for (const auto& part : cwd) {
+        parts.push_back(part.string());
+    }
+    std::string result;
+    int count = std::min(depth, static_cast<int>(parts.size()));
+    for (int i = parts.size() - count; i < parts.size(); ++i) {
+        std::string name = parts[i];
+        if (i == parts.size() - 2 && depth == 2) {
+            name = name.empty() ? "" : std::string(1, name[0]);
+        }
+        result += name;
+        if (i < parts.size() - 1) result += "/";
+    }
+    return result;
+}
+
+
+std::string decorateString(std::string & shellName, std::string & userHost, std::string & path){
     if (shellName.find("zsh") != std::string::npos) {
         shellName = "zsh";
     }
@@ -20,7 +42,7 @@ std::string decorateString(std::string shellName, std::string userHost){
     {
         shellName = "";
     }
-    return "\x1b[1;33m" + shellName + " ~ \x1b[1;31m" + userHost + "\x1b[1;0m";
+    return "\x1b[1;31m" + userHost + "\x1b[1;32m > " + path + " $ \x1b[1;0m";
 }
 
 std::string getShellPrefix()
@@ -31,8 +53,9 @@ std::string getShellPrefix()
 
     struct passwd *pw = getpwuid(getuid());
     std::string username = pw ? pw->pw_name : "user";
-    std::string userHost = username + "@" + hostname + "$ ";
-    return decorateString(shellName, userHost);
+    std::string userHost = username + "@" + hostname;
+    std::string currentPath = getTruncatedCwd();
+    return decorateString(shellName, userHost, currentPath);
 }
 
 std::string formatTimeReadable(std::chrono::steady_clock::duration duration)
