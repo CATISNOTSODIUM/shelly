@@ -5,8 +5,8 @@ typing speed and most used commands.
 
 ## Checklist
 
-- [/] Simple command without arguments
-- [/] Command with at least one arguments
+- [x] Simple command without arguments
+- [x] Command with at least one arguments
 - [ ] Serialize multithreaded command tracking
 - [ ] Resolve path issues
 - [ ] Handle `cd` `exit` `fg` and other command (And show not found if command not found)
