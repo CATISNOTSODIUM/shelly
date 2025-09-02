@@ -30,4 +30,5 @@ void State::instrument(std::function<void(State *state)> runner)
 
 void State::updateCmdStatistics(std::string & cmd)
 {
+    // Access the hashmap of the parent process
 }

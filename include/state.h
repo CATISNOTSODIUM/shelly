@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <mutex>
 
-// Forwarding class
+// Forwarding classes
 class Shell;
 
 /**
@@ -20,8 +20,9 @@ public:
     static void loadState(char *filePath);
     std::string getPromptPrefix();
     // Run the function and store the state if necessary
-    void instrument(std::function<void(State * state)>);
-    void updateCmdStatistics(std::string & cmd);
+    void instrument(std::function<void(State *state)>);
+    void updateCmdStatistics(std::string &cmd);
+
 private:
     State();
     std::string promptPrefix;
