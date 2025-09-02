@@ -1,5 +1,5 @@
-#ifndef SHELLY_STATE_H
-#define SHELLY_STATE_H
+#ifndef PAWERSHELE_STATE_H
+#define PAWERSHELE_STATE_H
 
 #include <string>
 #include <functional>
@@ -10,7 +10,7 @@
 class Shell;
 
 /**
- * Represents the global states of shelly
+ * Represents the global states of pawerShele
  */
 class State
 {

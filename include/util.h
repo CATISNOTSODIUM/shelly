@@ -1,5 +1,5 @@
-#ifndef SHELLY_UTIL_H
-#define SHELLY_UTIL_H
+#ifndef PAWERSHELE_UTIL_H
+#define PAWERSHELE_UTIL_H
 
 #include <string>
 #include <sys/types.h>

@@ -1,5 +1,5 @@
-#ifndef SHELLY_SHELL_H
-#define SHELLY_SHELL_H
+#ifndef PAWERSHELE_SHELL_H
+#define PAWERSHELE_SHELL_H
 
 #include "state.h"
 

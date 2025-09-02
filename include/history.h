@@ -1,5 +1,5 @@
-#ifndef SHELLY_HISTORY_H
-#define SHELLY_HISTORY_H
+#ifndef PAWERSHELE_HISTORY_H
+#define PAWERSHELE_HISTORY_H
 
 /**
  * A virtual class representing all history types

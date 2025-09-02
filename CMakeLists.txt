@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(shelly)
+project(pawershele)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -9,4 +9,4 @@ include_directories(include)
 # source files
 
 file(GLOB SOURCES "src/*.cpp")
-add_executable(shelly ${SOURCES})
+add_executable(pawershele ${SOURCES})
