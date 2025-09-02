@@ -1,7 +1,6 @@
 #include "state.h"
 #include "shell.h"
 #include "util.h"
-#include "config.h"
 #include <chrono>
 #include <iostream>
 
@@ -9,13 +8,11 @@ State::State(Shell * _shell) {
     shell = _shell;
     promptPrefix = getShellPrefix();
     stateFilePath = getDefaultStatePath();
-    ensureStateDirectoryExists(stateFilePath);
-    // Load states
-    loadFile(this, stateFilePath);
+    PAWERSHELE(stateFilePath);
 }
 
 State::~State() {
-    saveFile(this, stateFilePath);
+    
 }
 
 std::string State::getPromptPrefix() {

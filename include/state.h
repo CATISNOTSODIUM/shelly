@@ -22,11 +22,16 @@ public:
     // Run the function and store the state if necessary
     void instrument(std::function<void(State *state)>);
     void updateCmdStatistics(std::string &cmd);
+    std::unordered_map<std::string, long> cmdFrequency;
 
 private:
     State();
+    std::string stateFilePath;
     std::string promptPrefix;
     Shell *shell;
+
+    // Special mutex for handling cmdFrequency updates
+    mutable std::mutex frequencyMutex;
 };
 
 #endif

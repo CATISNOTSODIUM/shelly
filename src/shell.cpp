@@ -15,8 +15,9 @@ Shell::Shell()
 
 Shell::~Shell()
 {
+    printf("CALLED DESTRUCTOR\n");
     delete state;
-    delete status;
+    free(status);
 }
 
 std::string Shell::getCommand()
@@ -47,6 +48,20 @@ int Shell::run()
     {
         std::string cmd = getCommand();
         cmd = trim(cmd);
+        // TODO: Add proper parser to handle special commands
+        std::vector<std::string> tokens;
+        std::vector<char *> args;
+        std::istringstream iss(cmd);
+        std::string token;
+        while (iss >> token)
+        {
+            tokens.push_back(trim(token));
+        }
+        for (auto &arg : tokens)
+        {
+            args.push_back(&arg[0]);
+        }
+        args.push_back(NULL);
         auto runner = [&](State *state)
         {
             if (fork())
@@ -55,25 +70,10 @@ int Shell::run()
             }
             else
             {
-                // TODO: Add proper parser to handle special commands
-                std::vector<std::string> tokens;
-                std::vector<char *> args;
-                std::istringstream iss(cmd);
-                std::string token;
-                while (iss >> token)
-                {
-                    tokens.push_back(trim(token));
-                }
-                for (auto &arg : tokens)
-                {
-                    args.push_back(&arg[0]);
-                }
-                args.push_back(NULL);
-                state->updateCmdStatistics(tokens[0]);
                 int status = execvp(args[0], args.data());
-                exit(status);
             }
         };
+        state->updateCmdStatistics(tokens[0]);
         state->instrument(runner);
     }
     return 0;

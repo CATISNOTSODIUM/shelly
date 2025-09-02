@@ -4,13 +4,19 @@ Pawershele is an interactive shell that tracks irrelevant information, such as
 typing speed and most used commands.
 
 ## Quick start
-Pawershele uses CMake to generate a build environment in a new directory. First, create a new directory `build` and execute the following. Make sure that you have your `cmake` installed in your device.
+Pawershele only supports UNIX operating system. Pawershele uses CMake to generate a build environment in a new directory. First, create a new directory `build` and execute the following. Make sure that you have your `cmake` installed in your device.
 ```sh
 mkdir build
 cd build
 cmake ..
 ```
 Then, run `make` to build your executable. Your final executable `pawershele` should be present in the `build` directory.
+
+## Implementation details
+### Storing states
+Pawershele stores application states in `.config/state.txt`. The state includes
+- [x] Key value pairs of command frequency 
+- [ ] Typing speed, instrumentation
 
 ## Checklist
 

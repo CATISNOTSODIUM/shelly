@@ -13,8 +13,7 @@ public:
 
 private:
     State *state;
-    std::string getCommand();
-    
+    std::string getCommand(); 
 };
 
 #endif

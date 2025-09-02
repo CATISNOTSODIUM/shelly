@@ -8,6 +8,7 @@
 #include <chrono>
 #include <sstream>
 #include <filesystem>
+#include <iostream>
 
 std::string getTruncatedCwd(int depth = 2) {
     namespace fs = std::filesystem;
@@ -85,6 +86,33 @@ std::string formatTimeReadable(std::chrono::steady_clock::duration duration)
         oss << parts[i];
     }
     return oss.str();
+}
+
+std::string getDefaultStatePath()
+{
+    const char *home = std::getenv("HOME");
+    std::string configDir = home ? std::string(home) + "/.config/pawershele" : "/tmp/pawershele";
+    return configDir + "/state.txt";
+}
+
+bool ensureStateDirectoryExists(std::string &stateFilePath)
+{
+    try
+    {
+        std::filesystem::path filePath(stateFilePath);
+        std::filesystem::path directory = filePath.parent_path();
+        if (!std::filesystem::exists(directory))
+        {
+            std::filesystem::create_directories(directory);
+            std::cout << "Created directory: " << directory << std::endl;
+        }
+        return true;
+    }
+    catch (const std::filesystem::filesystem_error &e)
+    {
+        std::cerr << "Failed to create directory: " << e.what() << std::endl;
+        return false;
+    }
 }
 
 #endif
