@@ -11,6 +11,7 @@ cd build
 cmake ..
 ```
 Then, run `make` to build your executable. Your final executable `pawershele` should be present in the `build` directory.
+
 ## Checklist
 
 - [x] Simple command without arguments
